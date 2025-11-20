@@ -13,7 +13,7 @@ pipeline {
                 script{
                     def PackageJson = readJSON file: 'package.json'
                     def AppVersion = PackageJson.Version
-                    echo 'Application Version: $AppVersion'
+                    echo "Application Version: $AppVersion"
                 }
             }
         }
@@ -22,7 +22,7 @@ pipeline {
                 sh '''
                     npm install
                     ls -ltr
-                    echo $AppVersion
+                    echo "$AppVersion"
                 '''
             }
         }
