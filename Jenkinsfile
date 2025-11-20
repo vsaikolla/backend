@@ -32,6 +32,7 @@ pipeline {
         stage('Build'){
             steps{
                 sh '''
+                sudo yum install zip -y
                 zip -r backend-${appversion}.zip * -x Jenkinsfile -x backend-${appversion}.zip
                 ls -ltr
                 '''
