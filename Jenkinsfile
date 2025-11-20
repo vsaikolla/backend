@@ -31,11 +31,11 @@ pipeline {
         }
         stage('Build'){
             steps{
-                sh '''
+                sh """
                 sudo yum install zip -y
                 zip -q -r backend-${appversion}.zip * -x Jenkinsfile -x backend-${appversion}.zip
                 ls -ltr
-                '''
+                """
             }
         }
     }
