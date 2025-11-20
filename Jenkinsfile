@@ -8,25 +8,25 @@ pipeline {
         ansiColor('xterm')
     }
     environment{
-        def AppVersion = ''
+        def appversion = '' // declaring a variable
     }
     stages {
         stage('Read the Version'){
             steps{
                 script{
                     def PackageJson = readJSON file: 'package.json'
-                    AppVersion = PackageJson.version
-                    echo "Application Version: $AppVersion"
+                    appversion = PackageJson.version
+                    echo "Application Version: $appversion"
                 }
             }
         }
         stage('Install Dependencies') { 
             steps {
-                sh '''
+                sh """
                     npm install
                     ls -ltr
-                    echo "Application Version: $AppVersion"
-                '''
+                    echo "Application Version: $appversion"
+                """
             }
         }
     }
