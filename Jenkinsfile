@@ -9,6 +9,7 @@ pipeline {
     }
     environment{
         def appversion = '' // declaring a variable
+        nexusUrl = 'nexus.sainath.online:8081'
     }
     stages {
         stage('Read the Version'){
@@ -38,11 +39,33 @@ pipeline {
                 """
             }
         }
+        stage('Nexus Artifact Upload'){
+            steps{
+                script{
+                    nexusArtifactUploader(
+                        nexusVersion: 'nexus3',
+                        protocol: 'http',
+                        nexusUrl: "${nexusUrl}",
+                        groupId: 'com.expense',
+                        version: "${appversion}",
+                        repository: 'backend',
+                        credentialsId: 'nexus-auth',
+                        artifacts: [
+                            [artifactId: 'backend',
+                            classifier: '',
+                            file: 'backend-' + "${appversion}" + '.zip',
+                            type: 'zip']
+                        ]
+                    )
+                }
+            }
+        }
+
     }
     post{
         always{
             echo 'i will always say hello'
-            //deleteDir()
+            deleteDir()
         }
         success{
             echo 'i will run if build is success'
